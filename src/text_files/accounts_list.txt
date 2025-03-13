@@ -1,0 +1,16 @@
+U001 Alberto Gabbai Via Servais 16/A Torino
+U056 carlo.navone@libero.it
+U056 Carlo Navone Via exilles 12
+U001 alberto.gabbai@libero.it
+U056 carlo.navone@hotmail.com
+U025
+U026 Giusi
+U027 Giusi Ferrero
+U033 Giampietro Zedda Via Po 20 Torino
+U033 giampietro.zedda@libero.it.it
+U020 Giorgio Poggi Via San Massimo 3 Torino
+U020 giorgio.poggi@libero.it
+U020 giorgio.poggi@google.com
+U020 giorgio.poggi@spformazione.com
+
+U022 Giorgio Palandri Via Livorno 25/a Torino
