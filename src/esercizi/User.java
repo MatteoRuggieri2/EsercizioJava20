@@ -5,8 +5,8 @@ import java.util.Set;
 
 //Implementa il Comparable per avere la funzione compareTo per il sort
 // In genere crea sempre le funzioni toString e hashCode, equals, Source > Generate...
-//public class User implements Comparable<User> {
-public class User {
+public class User implements Comparable<User> {
+//public class User {
 	String idUser;
 	String nome;
 	String cognome;
@@ -65,6 +65,12 @@ public class User {
 		return Objects.equals(cognome, other.cognome) && Objects.equals(idUser, other.idUser)
 				&& Objects.equals(indirizzo, other.indirizzo) && Objects.equals(mailList, other.mailList)
 				&& Objects.equals(nome, other.nome);
+	}
+	
+	@Override
+	public int compareTo(User o) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 	
 	

@@ -10,7 +10,15 @@ import java.util.Optional;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
-public class GestioneAccount implements Account {
+public class GestioneAccount implements Account<User> {
+	
+	// TODO: - compareTo() in Uses
+	// TODO: - Controlla metodi già scritti
+	// TODO: - Implementa quelli mancanti
+	// TODO: - Fai i test JUnit
+	
+	
+	
 	
 	static String pathFile = "src/text_files/accounts_list.txt";
 	
@@ -76,7 +84,7 @@ public class GestioneAccount implements Account {
 	}
 
 	@Override
-	public String[] idUsers(EnumSortType sortType) {
+	public String[] userIds(EnumSortType sortType) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -88,31 +96,31 @@ public class GestioneAccount implements Account {
 	}
 
 	@Override
-	public Object[] users(EnumSortType sortType) {
+	public User[] users(EnumSortType sortType) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object firstUser() {
+	public User firstUser() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object lastUser() {
+	public User lastUser() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object[] firstUsers(int numUsers) {
+	public User[] firstUsers(int numUsers) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object[] lastUsers(int numUsers) {
+	public User[] lastUsers(int numUsers) {
 		// TODO Auto-generated method stub
 		return null;
 	}
