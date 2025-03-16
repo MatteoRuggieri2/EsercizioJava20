@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
 
 public class GestioneAccount implements Account<User> {
 	
-	// TODO: - compareTo() in Uses
+	// TODO: - compareTo() in User
 	// TODO: - Controlla metodi già scritti
 	// TODO: - Implementa quelli mancanti
 	// TODO: - Fai i test JUnit
@@ -67,8 +67,7 @@ public class GestioneAccount implements Account<User> {
 
 	@Override
 	public boolean existsUser(String idUser) {
-		// TODO Auto-generated method stub
-		return false;
+		return this.users.keySet().contains(idUser);
 	}
 
 	@Override
