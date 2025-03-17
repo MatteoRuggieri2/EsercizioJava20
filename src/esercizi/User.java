@@ -3,43 +3,59 @@ package esercizi;
 import java.util.Objects;
 import java.util.Set;
 
-//Implementa il Comparable per avere la funzione compareTo per il sort
+// Implementa il Comparable per avere la funzione compareTo per il sort
 // In genere crea sempre le funzioni toString e hashCode, equals, Source > Generate...
 public class User implements Comparable<User> {
-//public class User {
+	
 	String idUser;
+	
 	String nome;
+	
 	String cognome;
+	
 	String indirizzo;
+	
 	Set<String> mailList;
+	
+	
 	
 	public String getNome() {
 		return nome;
 	}
+	
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
+	
 	public String getCognome() {
 		return cognome;
 	}
+	
 	public void setCognome(String cognome) {
 		this.cognome = cognome;
 	}
+	
 	public String getIndirizzo() {
 		return indirizzo;
 	}
+	
 	public void setIndirizzo(String indirizzo) {
 		this.indirizzo = indirizzo;
 	}
+	
 	public Set<String> getMailList() {
 		return mailList;
 	}
+	
 	public void setMailList(Set<String> mailList) {
 		this.mailList = mailList;
 	}
+	
 	public String getIdUser() {
 		return idUser;
 	}
+	
+	
 	
 	/* Questa funzione (creata in "Source > Generate hashCode() e equals()",
 	serve per generare un codice hash che rispecchi lo stato dell'oggetto su
