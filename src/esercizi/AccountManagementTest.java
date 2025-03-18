@@ -8,14 +8,14 @@ import java.util.Map;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-class GestioneAccountTest {
+class AccountManagementTest {
 	
 	static String pathFile = "src/text_files/accounts_list.txt";
-	static GestioneAccount ga;
+	static AccountManagement ga;
 
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
-		ga = new GestioneAccount(pathFile);
+		ga = new AccountManagement(pathFile);
 	}
 
 	@Test

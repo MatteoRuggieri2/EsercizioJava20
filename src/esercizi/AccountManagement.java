@@ -11,7 +11,7 @@ import java.util.Optional;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
-public class GestioneAccount implements Account<User> {
+public class AccountManagement implements Account<User> {
 	
 	// TODO: - compareTo() in User
 	// TODO: - Controlla metodi già scritti
@@ -26,11 +26,11 @@ public class GestioneAccount implements Account<User> {
 	Map<String, User> users;
 
 	public static void main(String[] args) {
-		GestioneAccount gestioneAccount = new GestioneAccount(pathFile);
-		gestioneAccount.addMail("1", "test");
+		AccountManagement accountManagement = new AccountManagement(pathFile);
+		accountManagement.addMail("1", "test");
 	}
 	
-	GestioneAccount(String fileName) {
+	AccountManagement(String fileName) {
 		
 		// Leggo il file e salvo ogni riga in fileRows
 //		this.fileRows = readFile(this.pathFile);

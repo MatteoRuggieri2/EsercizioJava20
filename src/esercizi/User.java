@@ -1,11 +1,12 @@
 package esercizi;
 
+import java.util.Comparator;
 import java.util.Objects;
 import java.util.Set;
 
-// Implementa il Comparable per avere la funzione compareTo per il sort
+// Implementa il Comparator o il Comparable per avere la funzione compareTo per il sort
 // In genere crea sempre le funzioni toString e hashCode, equals, Source > Generate...
-public class User implements Comparable<User> {
+public class User implements Comparator<User>, Comparable<User> { // TODO -> SOLO 1 DEI DUE
 	
 	String idUser;
 	
@@ -83,12 +84,19 @@ public class User implements Comparable<User> {
 				&& Objects.equals(nome, other.nome);
 	}
 	
+
+	@Override
+	public int compare(User o1, User o2) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	
+	
 	@Override
 	public int compareTo(User o) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-	
 	
 	
 	
