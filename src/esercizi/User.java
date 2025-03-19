@@ -6,7 +6,7 @@ import java.util.Set;
 
 // Implementa il Comparator o il Comparable per avere la funzione compareTo per il sort
 // In genere crea sempre le funzioni toString e hashCode, equals, Source > Generate...
-public class User implements Comparator<User>, Comparable<User> { // TODO -> SOLO 1 DEI DUE
+public class User implements Comparable<User> {
 	
 	String idUser;
 	
@@ -85,17 +85,23 @@ public class User implements Comparator<User>, Comparable<User> { // TODO -> SOL
 	}
 	
 
-	@Override
-	public int compare(User o1, User o2) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-	
-	
+	/* Viene usato per ordinare gli oggetti della classe User in una struttura
+	 * ordinata come TreeSet o Collections.sort().
+	 * 
+	 * Return:
+	 * Un numero negativo se l'oggetto corrente è "minore" di o.
+     * Zero se sono uguali.
+     * Un numero positivo se è "maggiore" di o. */
 	@Override
 	public int compareTo(User o) {
-		// TODO Auto-generated method stub
-		return 0;
+	    int cmp = this.cognome.toLowerCase().compareTo(o.cognome.toLowerCase());
+	    if (cmp == 0) {
+	        cmp = this.nome.toLowerCase().compareTo(o.nome.toLowerCase());
+	        if (cmp == 0) {
+	            return this.idUser.toLowerCase().compareTo(o.idUser.toLowerCase());
+	        }
+	    }
+	    return cmp;
 	}
 	
 	
