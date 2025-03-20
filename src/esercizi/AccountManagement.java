@@ -211,6 +211,7 @@ public class AccountManagement implements Account<User> {
 					
 					//	Controllo, se la mail non è corretta, aggiungo la riga alla lista di quelle errate e passo alla prox
 					if (!emailCheck(secondToken)) {
+						System.out.println("Email errata: " + secondToken);
 						discardRow(row);
 						continue;
 					}
@@ -218,19 +219,21 @@ public class AccountManagement implements Account<User> {
 					userEmail = secondToken;
 					System.out.println(userEmail);
 					
-					/* Altrimenti se c'è un terzo token vuol dire che il secondo
-					 * è il nome, e il terzo è il cognome */
+				/* Altrimenti se c'è un terzo token vuol dire che il secondo
+				 * è il nome, e il terzo è il cognome */
 				} else if (sc.hasNext()) {
 					userName = secondToken;
-					
-					// Salvo il cognome
 					userLastname = sc.next();
 				}
 				
-				// Se c'è il quarto token è l'indirizzo dell'utente
+				// Se c'è il quarto token salvo l'indirizzo dell'utente, altrimenti scarto riga
 				if (sc.hasNext()) {
 					userAddress = sc.nextLine();
+				} else {
+					discardRow(row);
+					continue;
 				}
+				
 			} else {
 				discardRow(row);
 				continue;
@@ -265,9 +268,13 @@ public class AccountManagement implements Account<User> {
 	
 	// Questa funzione ritorna un valore booleano, true se la email è formattata correttamente, altrimenti false.
 	public boolean emailCheck(String email) {
-		String regex = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^-]+(?:.[a-zA-Z0-9_!#$%&'*+/=?`{|}~^-]+)*@[a-zA-Z0-9-]+(?:.[a-zA-Z0-9-]+)*$";
-        Pattern p = Pattern.compile(regex);
-        return p.matcher(email).matches();
+		String regex = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^-]+(?:\\.[a-zA-Z0-9_!#$%&'*+/=?`{|}~^-]+)*@"
+                + "[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*\\.[a-zA-Z]{2,6}$";
+
+	   // Blocco le doppie estensioni come .it.it
+	   if (email.matches(".*\\.[a-zA-Z]{2,6}\\.[a-zA-Z]{2,6}$")) { return false; }
+	   Pattern p = Pattern.compile(regex);
+	   return p.matcher(email).matches();
 	}
 	
 	// Questo metodo aggiunge alla lista di righe scartate quella passata come parametro.
