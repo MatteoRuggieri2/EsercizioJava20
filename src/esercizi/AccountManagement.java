@@ -13,7 +13,6 @@ import java.util.regex.Pattern;
 
 public class AccountManagement implements Account<User> {
 	
-	// TODO: - compareTo() in User
 	// TODO: - Controlla metodi già scritti
 	// TODO: - Implementa quelli mancanti
 	// TODO: - Fai i test JUnit
@@ -23,7 +22,12 @@ public class AccountManagement implements Account<User> {
 	
 	static String pathFile = "src/text_files/accounts_list.txt";
 	
+	List<String> fileRowsContent = new ArrayList<String>(); // Contiene le righe del file così come sono
+	
 	Map<String, User> users;
+	
+	
+	
 
 	public static void main(String[] args) {
 		AccountManagement accountManagement = new AccountManagement(pathFile);
@@ -37,7 +41,7 @@ public class AccountManagement implements Account<User> {
 		
 		// Leggo ogni riga e separo nome, cognome, indirizzo, email
 		this.users = new HashMap<String, User>();
-		this.readFile(fileName);
+		readFile(fileName);
 		
 	}
 
@@ -138,10 +142,9 @@ public class AccountManagement implements Account<User> {
 		return null;
 	}
 	
+	// CHECKED
 	// Questa funzione prende il path del file, apre il file e ritorna una lista 
 	private void readFile(String path) {
-		
-		List<String> fileRowsContent = new ArrayList();
 		
 		// Apro il file
 		File inputFile = new File(path);
@@ -152,7 +155,7 @@ public class AccountManagement implements Account<User> {
 			
 			// FINCHE' ci sono righe, le salvo in fileRowsContent
 			while (scanner.hasNextLine()) {
-				fileRowsContent.add(scanner.nextLine());
+				this.fileRowsContent.add(scanner.nextLine());
 			}
 			
 			// Chiudo lo scanner
@@ -166,14 +169,6 @@ public class AccountManagement implements Account<User> {
 
 	}
 	
-	// DOMANDA, se volessi questo metodo privato, non posso altrimenti non posso testarlo, giusto?
-	
-	// Questa funzione ritorna un valore booleano, true se la email è formattata correttamente, altrimenti false.
-	public boolean emailCheck(String email) {
-		String regex = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^-]+(?:.[a-zA-Z0-9_!#$%&'*+/=?`{|}~^-]+)*@[a-zA-Z0-9-]+(?:.[a-zA-Z0-9-]+)*$";
-        Pattern p = Pattern.compile(regex);
-        return p.matcher(email).matches();
-	}
 	
 	// Questa funzione legge ogni riga e separa i vari dati
 	private void rowsAnalyzer(List<String> rows) {
@@ -193,7 +188,7 @@ public class AccountManagement implements Account<User> {
 			
 			// Se la riga non è vuota
 			if (scanner.hasNext()) {
-			
+				
 				// Salvo userId
 				userId = scanner.next();
 			}
@@ -216,8 +211,8 @@ public class AccountManagement implements Account<User> {
 					userEmail = secondToken;
 					System.out.println(userEmail);
 					
-				/* Altrimenti se c'è un terzo token vuol dire che il secondo
-				 * è il nome, e il terzo è il cognome */
+					/* Altrimenti se c'è un terzo token vuol dire che il secondo
+					 * è il nome, e il terzo è il cognome */
 				} else if (scanner.hasNext()) {
 					userName = secondToken;
 					
@@ -241,8 +236,8 @@ public class AccountManagement implements Account<User> {
 //				this.addUser(userId, userName, userLastname, userAddress.orElse(""));
 				
 //				Gestire il caso in cui l'utente esiste già e bisogna aggiungere una email
-
-
+				
+				
 				// Aggiungo la mail
 //				user.setMailList.add(userEmail);
 			} else if (!this.users.containsKey(userId)) {
@@ -253,6 +248,16 @@ public class AccountManagement implements Account<User> {
 		}
 		
 	}
+	
+	
+	
+	// Questa funzione ritorna un valore booleano, true se la email è formattata correttamente, altrimenti false.
+	public boolean emailCheck(String email) {
+		String regex = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^-]+(?:.[a-zA-Z0-9_!#$%&'*+/=?`{|}~^-]+)*@[a-zA-Z0-9-]+(?:.[a-zA-Z0-9-]+)*$";
+        Pattern p = Pattern.compile(regex);
+        return p.matcher(email).matches();
+	}
+	
 
 }
 
