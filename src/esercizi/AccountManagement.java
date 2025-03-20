@@ -20,11 +20,15 @@ public class AccountManagement implements Account<User> {
 	
 	
 	
-	static String pathFile = "src/text_files/accounts_list.txt";
+	static private final String pathFile = "src/text_files/accounts_list.txt";
 	
-	List<String> fileRowsContent = new ArrayList<String>(); // Contiene le righe del file così come sono
+	private List<String> fileRowsContent = new ArrayList<String>(); // Contiene le righe del file così come sono
 	
-	Map<String, User> users;
+	private List<String> analyzedRows = new ArrayList<String>(); // Contiene le righe corrette analizzate (serve per verificare eventuali doppioni)
+	
+	private List<String> discardedRows = new ArrayList<String>(); // Contiene tutte le righe scartate
+	
+	private Map<String, User> users;
 	
 	
 	
@@ -157,16 +161,13 @@ public class AccountManagement implements Account<User> {
 			while (scanner.hasNextLine()) {
 				this.fileRowsContent.add(scanner.nextLine());
 			}
-			
-			// Chiudo lo scanner
 			scanner.close();
 			
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
 		
-		this.rowsAnalyzer(fileRowsContent);
-
+		this.rowsAnalyzer(this.fileRowsContent);
 	}
 	
 	
@@ -174,57 +175,68 @@ public class AccountManagement implements Account<User> {
 	private void rowsAnalyzer(List<String> rows) {
 		for (String row : rows) {
 			
-			String userId = null;
-//			Optional<String> userId = Optional.ofNullable(null);
-			String userEmail = null;
-//			Optional<String> userEmail = Optional.ofNullable(null);
-			String userName = null;
-//			Optional<String> userName = Optional.ofNullable(null);
-			String userLastname = null;
-//			Optional<String> userLastname = Optional.ofNullable(null);
-			String userAddress = null;
-//			Optional<String> userAddress = Optional.ofNullable(null);
-			Scanner scanner = new Scanner(row);
-			
-			// Se la riga non è vuota
-			if (scanner.hasNext()) {
-				
-				// Salvo userId
-				userId = scanner.next();
+			// Se la riga è già stata analizzata è doppia, quindi la scarto
+			if (this.analyzedRows.contains(row)) {
+				discardRow(row);
+				continue;
 			}
 			
-			// Se c'è qualcosa dopo l'id
-			if (scanner.hasNext()) {
-				String secondToken = scanner.next();
+			String userId = null;
+			String userEmail = null;
+			String userName = null;
+			String userLastname = null;
+			String userAddress = null;
+
+//			Optional<String> userId = Optional.ofNullable(null);
+//			Optional<String> userEmail = Optional.ofNullable(null);
+//			Optional<String> userName = Optional.ofNullable(null);
+//			Optional<String> userLastname = Optional.ofNullable(null);
+//			Optional<String> userAddress = Optional.ofNullable(null);
+			
+			Scanner sc = new Scanner(row);
+			
+			
+			// Se la riga non è vuota salvo lo userId
+			if (sc.hasNext()) {
+				userId = sc.next();
+			}
+			
+			// Se c'è qualcosa dopo l'id controllo di che dato si tratta
+			if (sc.hasNext()) {
+				String secondToken = sc.next();
 				
-				// Se il secondo token contiene @ vuol dire che è una mail
+				// EMAIL CHECK
+				// Controllo se il secondo token è una mail
 				if (secondToken.contains("@")) {
 					
-//					CONTROLLO, se la MAIL E' GIUSTA continuo, altrimenti scarto la riga e vado con la prox
-//					emailCheck(secondToken);
-//					if (emailCheck(secondToken)) {
-//						userEmail = secondToken;
-//					} else {
-//						continue;
-//					}
+					//	Controllo, se la mail non è corretta, aggiungo la riga alla lista di quelle errate e passo alla prox
+					if (!emailCheck(secondToken)) {
+						discardRow(row);
+						continue;
+					}
 					
 					userEmail = secondToken;
 					System.out.println(userEmail);
 					
 					/* Altrimenti se c'è un terzo token vuol dire che il secondo
 					 * è il nome, e il terzo è il cognome */
-				} else if (scanner.hasNext()) {
+				} else if (sc.hasNext()) {
 					userName = secondToken;
 					
 					// Salvo il cognome
-					userLastname = scanner.next();
+					userLastname = sc.next();
 				}
 				
 				// Se c'è il quarto token è l'indirizzo dell'utente
-				if (scanner.hasNext()) {
-					userAddress = scanner.nextLine();
+				if (sc.hasNext()) {
+					userAddress = sc.nextLine();
 				}
+			} else {
+				discardRow(row);
+				continue;
 			}
+			
+			
 			
 			// TODO
 			// Se l'utente non esiste ed è presente la email vuol dire che la riga ha solo id e mail
@@ -258,6 +270,10 @@ public class AccountManagement implements Account<User> {
         return p.matcher(email).matches();
 	}
 	
+	// Questo metodo aggiunge alla lista di righe scartate quella passata come parametro.
+	private void discardRow(String row) {
+		this.discardedRows.add(row);
+	}
 
 }
 
