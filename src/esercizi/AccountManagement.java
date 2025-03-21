@@ -175,6 +175,8 @@ public class AccountManagement implements Account<User> {
 	private void rowsAnalyzer(List<String> rows) {
 		for (String row : rows) {
 			
+			// TODO -> BUG - Vengono scartate righe che non dovrebbero
+			
 			// Se la riga è già stata analizzata è doppia, quindi la scarto
 			if (this.analyzedRows.contains(row)) {
 				discardRow(row);
@@ -211,28 +213,32 @@ public class AccountManagement implements Account<User> {
 					
 					//	Controllo, se la mail non è corretta, aggiungo la riga alla lista di quelle errate e passo alla prox
 					if (!emailCheck(secondToken)) {
-						System.out.println("Email errata: " + secondToken);
 						discardRow(row);
 						continue;
 					}
 					
 					userEmail = secondToken;
-					System.out.println(userEmail);
+//					System.out.println(userEmail);
 					
 				/* Altrimenti se c'è un terzo token vuol dire che il secondo
 				 * è il nome, e il terzo è il cognome */
 				} else if (sc.hasNext()) {
 					userName = secondToken;
 					userLastname = sc.next();
-				}
-				
-				// Se c'è il quarto token salvo l'indirizzo dell'utente, altrimenti scarto riga
-				if (sc.hasNext()) {
-					userAddress = sc.nextLine();
+
+					// Se c'è il quarto token salvo l'indirizzo dell'utente, altrimenti scarto riga
+					if (sc.hasNext()) {
+						userAddress = sc.nextLine();
+					} else {
+						discardRow(row);
+						continue;
+					}
+					
 				} else {
 					discardRow(row);
 					continue;
 				}
+				
 				
 			} else {
 				discardRow(row);
@@ -241,24 +247,31 @@ public class AccountManagement implements Account<User> {
 			
 			
 			
-			// TODO
-			// Se l'utente non esiste ed è presente la email vuol dire che la riga ha solo id e mail
-			if (!this.users.containsKey(userId) && userEmail != null) {
-//			if (!this.users.containsKey(userId) && userEmail.isPresent()) {
-				
-				// Ho ID e MAIL, devo mettere altri dati falsi
-				this.addUser(userId, userName, userLastname, userAddress);
-//				this.addUser(userId, userName, userLastname, userAddress.orElse(""));
-				
-//				Gestire il caso in cui l'utente esiste già e bisogna aggiungere una email
-				
-				
-				// Aggiungo la mail
-//				user.setMailList.add(userEmail);
-			} else if (!this.users.containsKey(userId)) {
+//			// TODO
+//			// Se l'utente non esiste ed è presente la email vuol dire che la riga ha solo id e mail
+//			if (!this.users.containsKey(userId) && userEmail != null) {
+////			if (!this.users.containsKey(userId) && userEmail.isPresent()) {
+//				
+//				// Ho ID e MAIL, devo mettere altri dati falsi
 //				this.addUser(userId, userName, userLastname, userAddress);
-			}
+////				this.addUser(userId, userName, userLastname, userAddress.orElse(""));
+//				
+////				Gestire il caso in cui l'utente esiste già e bisogna aggiungere una email
+//				
+//				
+//				// Aggiungo la mail
+////				user.setMailList.add(userEmail);
+//			} else if (!this.users.containsKey(userId)) {
+////				this.addUser(userId, userName, userLastname, userAddress);
+//			}
 			
+			this.analyzedRows.add(row);
+			
+			System.out.println("\nuserId: " + userId);
+			System.out.println("userEmail: " + userEmail);
+			System.out.println("userName: " + userName);
+			System.out.println("userLastname: " + userLastname);
+			System.out.println("userAddress: " + userAddress);
 			
 		}
 		
