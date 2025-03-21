@@ -65,10 +65,16 @@ public class AccountManagement implements Account<User> {
 		}
 	}
 
+	
+	// CHECKED
 	@Override
 	public boolean addMail(String idUser, String mail) {
-		// TODO Auto-generated method stub
-		return false;
+		Optional<User> userToUpdate = Optional.ofNullable(users.get(idUser));
+		if (userToUpdate.isEmpty()) {
+			return false;
+		}
+		userToUpdate.get().addMailToList(mail);
+		return true;
 	}
 
 	@Override
