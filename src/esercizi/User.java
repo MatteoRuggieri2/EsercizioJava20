@@ -7,40 +7,48 @@ import java.util.Set;
 // In genere crea sempre le funzioni toString e hashCode, equals, Source > Generate...
 public class User implements Comparable<User> {
 	
-	String idUser;
+	String id;
 	
-	String nome;
+	String name;
 	
-	String cognome;
+	String lastname;
 	
-	String indirizzo;
+	String address;
 	
 	Set<String> mailList;
 	
 	
 	
-	public String getNome() {
-		return nome;
+	public String getId() {
+		return id;
 	}
 	
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setIdUser(String id) {
+		this.id = id;
 	}
 	
-	public String getCognome() {
-		return cognome;
+	public String getName() {
+		return name;
 	}
 	
-	public void setCognome(String cognome) {
-		this.cognome = cognome;
+	public void setName(String name) {
+		this.name = name;
 	}
 	
-	public String getIndirizzo() {
-		return indirizzo;
+	public String getLastname() {
+		return lastname;
 	}
 	
-	public void setIndirizzo(String indirizzo) {
-		this.indirizzo = indirizzo;
+	public void setLastname(String lastname) {
+		this.lastname = lastname;
+	}
+	
+	public String getAddress() {
+		return address;
+	}
+	
+	public void setAddress(String address) {
+		this.address = address;
 	}
 	
 	public Set<String> getMailList() {
@@ -57,10 +65,6 @@ public class User implements Comparable<User> {
 		}
 	}
 	
-	public String getIdUser() {
-		return idUser;
-	}
-	
 	
 	
 	/* Questa funzione (creata in "Source > Generate hashCode() e equals()",
@@ -68,7 +72,7 @@ public class User implements Comparable<User> {
 	cui è stato usato. */
 	@Override
 	public int hashCode() {
-		return Objects.hash(cognome, idUser, indirizzo, mailList, nome);
+		return Objects.hash(lastname, id, address, mailList, name);
 	}
 	
 	/* Questa funzione, creata insieme a quella di sopra, serve per comparare
@@ -84,9 +88,9 @@ public class User implements Comparable<User> {
 		if (getClass() != obj.getClass())
 			return false;
 		User other = (User) obj;
-		return Objects.equals(cognome, other.cognome) && Objects.equals(idUser, other.idUser)
-				&& Objects.equals(indirizzo, other.indirizzo) && Objects.equals(mailList, other.mailList)
-				&& Objects.equals(nome, other.nome);
+		return Objects.equals(lastname, other.lastname) && Objects.equals(id, other.id)
+				&& Objects.equals(address, other.address) && Objects.equals(mailList, other.mailList)
+				&& Objects.equals(name, other.name);
 	}
 	
 
@@ -99,11 +103,11 @@ public class User implements Comparable<User> {
      * Un numero positivo se è "maggiore" di o. */
 	@Override
 	public int compareTo(User o) {
-	    int cmp = this.cognome.toLowerCase().compareTo(o.cognome.toLowerCase());
+	    int cmp = this.lastname.toLowerCase().compareTo(o.lastname.toLowerCase());
 	    if (cmp == 0) {
-	        cmp = this.nome.toLowerCase().compareTo(o.nome.toLowerCase());
+	        cmp = this.name.toLowerCase().compareTo(o.name.toLowerCase());
 	        if (cmp == 0) {
-	            return this.idUser.toLowerCase().compareTo(o.idUser.toLowerCase());
+	            return this.id.toLowerCase().compareTo(o.id.toLowerCase());
 	        }
 	    }
 	    return cmp;
