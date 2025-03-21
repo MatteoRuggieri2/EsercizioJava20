@@ -31,42 +31,38 @@ public class AccountManagement implements Account<User> {
 	private Map<String, User> users;
 	
 	
-	
 
 	public static void main(String[] args) {
 		AccountManagement accountManagement = new AccountManagement(pathFile);
 		accountManagement.addMail("1", "test");
 	}
 	
+	
+	
 	AccountManagement(String fileName) {
-		
-		// Leggo il file e salvo ogni riga in fileRows
-//		this.fileRows = readFile(this.pathFile);
-		
 		// Leggo ogni riga e separo nome, cognome, indirizzo, email
 		this.users = new HashMap<String, User>();
 		readFile(fileName);
 		
 	}
 
+	
+	// CHECKED
 	@Override
-	public boolean addUser(String idUser, String nome, String Cognome, String indirizzo) {
-		
-		// Istanzio un nuovo utente
+	public boolean addUser(String userId, String name, String surname, String address) {
 		User newUser = new User();
-		newUser.setNome(nome);
-		newUser.setCognome(Cognome);
-		newUser.setIndirizzo(indirizzo);
+		newUser.setNome(name);
+		newUser.setCognome(surname);
+		newUser.setIndirizzo(address);
 		
 		// Aggiungo l'utente alla mappa
 		try {
-			this.users.put(idUser, newUser);
+			this.users.put(userId, newUser);
 			return true;
 			
 		} catch (Exception e) {
 			return false;
 		}
-
 	}
 
 	@Override
@@ -175,8 +171,6 @@ public class AccountManagement implements Account<User> {
 	private void rowsAnalyzer(List<String> rows) {
 		for (String row : rows) {
 			
-			// TODO -> BUG - Vengono scartate righe che non dovrebbero
-			
 			// Se la riga è già stata analizzata è doppia, quindi la scarto
 			if (this.analyzedRows.contains(row)) {
 				discardRow(row);
@@ -245,9 +239,11 @@ public class AccountManagement implements Account<User> {
 				continue;
 			}
 			
+			// Dopo che ha superato tutti i controlli la metto nella lista delle righe analizzate
+			this.analyzedRows.add(row);
 			
 			
-//			// TODO
+
 //			// Se l'utente non esiste ed è presente la email vuol dire che la riga ha solo id e mail
 //			if (!this.users.containsKey(userId) && userEmail != null) {
 ////			if (!this.users.containsKey(userId) && userEmail.isPresent()) {
@@ -265,7 +261,17 @@ public class AccountManagement implements Account<User> {
 ////				this.addUser(userId, userName, userLastname, userAddress);
 //			}
 			
-			this.analyzedRows.add(row);
+			
+			
+			
+			// TODO -> Salva gli users
+			// SE TROVA ID AGGIUNGI DATI NON NULL
+			// SE NON TROVA CREA CON ID E AGGIUNGI I DATI NON NULL
+			
+			
+			
+			
+			
 			
 			System.out.println("\nuserId: " + userId);
 			System.out.println("userEmail: " + userEmail);
