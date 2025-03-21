@@ -189,22 +189,16 @@ public class AccountManagement implements Account<User> {
 			
 			/* Per ottimizzazione, le variabili le inizializzo
 			solo dopo essermi accertato che la riga non sia da scartare */
-			String userId = null;
-			String userEmail = null;
-			String userName = null;
-			String userLastname = null;
-			String userAddress = null;
-
-//			Optional<String> userId = Optional.ofNullable(null);
-//			Optional<String> userEmail = Optional.ofNullable(null);
-//			Optional<String> userName = Optional.ofNullable(null);
-//			Optional<String> userLastname = Optional.ofNullable(null);
-//			Optional<String> userAddress = Optional.ofNullable(null);
+			Optional<String> userId = Optional.empty();
+			Optional<String> userEmail = Optional.empty();
+			Optional<String> userName = Optional.empty();
+			Optional<String> userLastname = Optional.empty();
+			Optional<String> userAddress = Optional.empty();
 			
 			
 			
 			// Dato che la riga non è vuota, salvo lo userId
-			userId = sc.next();
+			userId = Optional.of(sc.next());
 			
 			// Se non c'è altro oltre l'id, la riga è errata, quindi la scarto
 			if (!sc.hasNext()) {
@@ -224,18 +218,18 @@ public class AccountManagement implements Account<User> {
 					continue;
 				}
 				
-				userEmail = secondToken;
+				userEmail = Optional.of(secondToken);
 //				System.out.println(userEmail);
 				
 			/* Altrimenti se c'è un terzo token vuol dire che il secondo
 			 * è il nome, e il terzo è il cognome */
 			} else if (sc.hasNext()) {
-				userName = secondToken;
-				userLastname = sc.next();
+				userName = Optional.of(secondToken);
+				userLastname = Optional.of(sc.next());
 
 				// Se c'è il quarto token salvo l'indirizzo dell'utente, altrimenti scarto riga
 				if (sc.hasNext()) {
-					userAddress = sc.nextLine().trim();
+					userAddress = Optional.of(sc.nextLine().trim());
 				} else {
 					discardRow(row);
 					continue;
@@ -254,18 +248,16 @@ public class AccountManagement implements Account<User> {
 			// SE TROVA ID AGGIUNGI DATI NON NULL
 			// SE NON TROVA CREA CON ID E AGGIUNGI I DATI NON NULL
 			
-			
-			System.out.println("\nuserId: " + userId);
-			System.out.println("userEmail: " + userEmail);
-			System.out.println("userName: " + userName);
-			System.out.println("userLastname: " + userLastname);
-			System.out.println("userAddress: " + userAddress);
+			String str = "null";
+			System.out.println("\nuserId: " + userId.orElse(str));
+			System.out.println("userEmail: " + userEmail.orElse(str));
+			System.out.println("userName: " + userName.orElse(str));
+			System.out.println("userLastname: " + userLastname.orElse(str));
+			System.out.println("userAddress: " + userAddress.orElse(str));
 			
 		}
 		
 	}
-	
-	
 
 
 	// Questa funzione ritorna un valore booleano, true se la email è formattata correttamente, altrimenti false.
