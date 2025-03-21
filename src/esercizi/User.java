@@ -51,6 +51,12 @@ public class User implements Comparable<User> {
 		this.mailList = mailList;
 	}
 	
+	public void addMailToList(String newMail) {
+		if (!this.mailList.contains(newMail)) {
+			this.mailList.add(newMail);
+		}
+	}
+	
 	public String getIdUser() {
 		return idUser;
 	}
