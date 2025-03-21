@@ -50,6 +50,7 @@ public class AccountManagement implements Account<User> {
 	// CHECKED
 	@Override
 	public boolean addUser(String userId, String name, String surname, String address) {
+		
 		User newUser = new User();
 		newUser.setNome(name);
 		newUser.setCognome(surname);
@@ -173,16 +174,21 @@ public class AccountManagement implements Account<User> {
 	}
 	
 	
-	// Questa funzione legge ogni riga e separa i vari dati
 	private void rowsAnalyzer(List<String> rows) {
 		for (String row : rows) {
+
+			Scanner sc = new Scanner(row);
 			
-			// Se la riga è già stata analizzata è doppia, quindi la scarto
+			// Se la riga è doppia o è vuota la scarto
 			if (this.analyzedRows.contains(row)) {
 				discardRow(row);
 				continue;
+			} else if (!sc.hasNext()) {
+				continue;
 			}
 			
+			/* Per ottimizzazione, le variabili le inizializzo
+			solo dopo essermi accertato che la riga non sia da scartare */
 			String userId = null;
 			String userEmail = null;
 			String userName = null;
@@ -195,50 +201,45 @@ public class AccountManagement implements Account<User> {
 //			Optional<String> userLastname = Optional.ofNullable(null);
 //			Optional<String> userAddress = Optional.ofNullable(null);
 			
-			Scanner sc = new Scanner(row);
 			
 			
-			// Se la riga non è vuota salvo lo userId
-			if (sc.hasNext()) {
-				userId = sc.next();
+			// Dato che la riga non è vuota, salvo lo userId
+			userId = sc.next();
+			
+			// Se non c'è altro oltre l'id, la riga è errata, quindi la scarto
+			if (!sc.hasNext()) {
+				discardRow(row);
+				continue;
 			}
 			
 			// Se c'è qualcosa dopo l'id controllo di che dato si tratta
-			if (sc.hasNext()) {
-				String secondToken = sc.next();
+			String secondToken = sc.next();
+			
+			// EMAIL CHECK
+			if (secondToken.contains("@")) {
 				
-				// EMAIL CHECK
-				// Controllo se il secondo token è una mail
-				if (secondToken.contains("@")) {
-					
-					//	Controllo, se la mail non è corretta, aggiungo la riga alla lista di quelle errate e passo alla prox
-					if (!emailCheck(secondToken)) {
-						discardRow(row);
-						continue;
-					}
-					
-					userEmail = secondToken;
-//					System.out.println(userEmail);
-					
-				/* Altrimenti se c'è un terzo token vuol dire che il secondo
-				 * è il nome, e il terzo è il cognome */
-				} else if (sc.hasNext()) {
-					userName = secondToken;
-					userLastname = sc.next();
-
-					// Se c'è il quarto token salvo l'indirizzo dell'utente, altrimenti scarto riga
-					if (sc.hasNext()) {
-						userAddress = sc.nextLine();
-					} else {
-						discardRow(row);
-						continue;
-					}
-					
-				} else {
+				//	Controllo il formato della meail, se errata scarto la riga
+				if (!emailCheck(secondToken)) {
 					discardRow(row);
 					continue;
 				}
 				
+				userEmail = secondToken;
+//				System.out.println(userEmail);
+				
+			/* Altrimenti se c'è un terzo token vuol dire che il secondo
+			 * è il nome, e il terzo è il cognome */
+			} else if (sc.hasNext()) {
+				userName = secondToken;
+				userLastname = sc.next();
+
+				// Se c'è il quarto token salvo l'indirizzo dell'utente, altrimenti scarto riga
+				if (sc.hasNext()) {
+					userAddress = sc.nextLine().trim();
+				} else {
+					discardRow(row);
+					continue;
+				}
 				
 			} else {
 				discardRow(row);
@@ -249,34 +250,9 @@ public class AccountManagement implements Account<User> {
 			this.analyzedRows.add(row);
 			
 			
-
-//			// Se l'utente non esiste ed è presente la email vuol dire che la riga ha solo id e mail
-//			if (!this.users.containsKey(userId) && userEmail != null) {
-////			if (!this.users.containsKey(userId) && userEmail.isPresent()) {
-//				
-//				// Ho ID e MAIL, devo mettere altri dati falsi
-//				this.addUser(userId, userName, userLastname, userAddress);
-////				this.addUser(userId, userName, userLastname, userAddress.orElse(""));
-//				
-////				Gestire il caso in cui l'utente esiste già e bisogna aggiungere una email
-//				
-//				
-//				// Aggiungo la mail
-////				user.setMailList.add(userEmail);
-//			} else if (!this.users.containsKey(userId)) {
-////				this.addUser(userId, userName, userLastname, userAddress);
-//			}
-			
-			
-			
-			
 			// TODO -> Salva gli users
 			// SE TROVA ID AGGIUNGI DATI NON NULL
 			// SE NON TROVA CREA CON ID E AGGIUNGI I DATI NON NULL
-			
-			
-			
-			
 			
 			
 			System.out.println("\nuserId: " + userId);
@@ -290,7 +266,8 @@ public class AccountManagement implements Account<User> {
 	}
 	
 	
-	
+
+
 	// Questa funzione ritorna un valore booleano, true se la email è formattata correttamente, altrimenti false.
 	public boolean emailCheck(String email) {
 		String regex = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^-]+(?:\\.[a-zA-Z0-9_!#$%&'*+/=?`{|}~^-]+)*@"
