@@ -33,8 +33,7 @@ public class AccountManagement implements Account<User> {
 	
 
 	public static void main(String[] args) {
-		AccountManagement accountManagement = new AccountManagement(pathFile);
-		accountManagement.addMail("1", "test");
+		new AccountManagement(pathFile);
 	}
 	
 	
@@ -52,9 +51,10 @@ public class AccountManagement implements Account<User> {
 	public boolean addUser(String userId, String name, String surname, String address) {
 		
 		User newUser = new User();
-		newUser.setNome(name);
-		newUser.setCognome(surname);
-		newUser.setIndirizzo(address);
+		if (userId != null) { newUser.setId(userId); }
+		if (name != null) { newUser.setName(name); }
+		if (surname != null) { newUser.setLastname(name); }
+		if (address != null) { newUser.setAddress(address); }
 		
 		// Aggiungo l'utente alla mappa
 		try {
@@ -62,6 +62,7 @@ public class AccountManagement implements Account<User> {
 			return true;
 			
 		} catch (Exception e) {
+			System.err.println(e);
 			return false;
 		}
 	}
@@ -247,6 +248,7 @@ public class AccountManagement implements Account<User> {
 			// TODO -> Salva gli users
 			// SE TROVA ID AGGIUNGI DATI NON NULL
 			// SE NON TROVA CREA CON ID E AGGIUNGI I DATI NON NULL
+			storeIdentity(userId, userEmail, userName, userLastname, userAddress);
 			
 			String str = "null";
 			System.out.println("\nuserId: " + userId.orElse(str));
@@ -258,7 +260,39 @@ public class AccountManagement implements Account<User> {
 		}
 		
 	}
-
+	
+	// Questo metodo si occupa di salvare i dati dell'utente ricavati dalla riga
+	private void storeIdentity(Optional<String> userId,
+							   Optional<String> userEmail,
+							   Optional<String> userName,
+							   Optional<String> userLastname,
+							   Optional<String> userAddress) {
+		
+		String userIdStr = userId.orElse("");
+		String userEmailStr = userEmail.orElse("");
+		String userNameStr = userName.orElse("");
+		String userLastnameStr = userLastname.orElse("");
+		String userAddressStr = userAddress.orElse("");
+	    
+		//TODO - Controlla se gli utenti sono stati aggiunti correttamente con tutti i dati
+		boolean statusAddUser = addUser(userIdStr, userNameStr, userLastnameStr, userAddressStr);
+		// boolean statusAddMail = addMail(userIdStr, userEmailStr); // TODO -> Aggiungi solo se non è vuota la mail
+		
+//		if (!statusAddUser) {
+//			System.err.println("Non è stato possibile salvare il seguente utente: "
+//								+ userIdStr + ", "
+//								+ userNameStr + ", "
+//								+ userLastnameStr + ", "
+//								+ userAddressStr + "."
+//			);
+//		} else if (!statusAddMail) {
+//			System.err.println("Non è stato possibile salvare la seguente email: "
+//					+ userIdStr + ", "
+//					+ userEmailStr + "."
+//			);
+//		}
+	}
+	
 
 	// Questa funzione ritorna un valore booleano, true se la email è formattata correttamente, altrimenti false.
 	public boolean emailCheck(String email) {
@@ -270,6 +304,7 @@ public class AccountManagement implements Account<User> {
 	   Pattern p = Pattern.compile(regex);
 	   return p.matcher(email).matches();
 	}
+	
 	
 	// Questo metodo aggiunge alla lista di righe scartate quella passata come parametro.
 	private void discardRow(String row) {

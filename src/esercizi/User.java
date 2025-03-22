@@ -23,7 +23,7 @@ public class User implements Comparable<User> {
 		return id;
 	}
 	
-	public void setIdUser(String id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 	
