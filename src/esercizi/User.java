@@ -115,14 +115,23 @@ public class User implements Comparable<User> {
 	}
 	
 	
+//	@Override
+//	public String toString() {
+//		return "User [id=" + id 
+//				+ ", name=" + name 
+//				+ ", lastname=" + lastname 
+//				+ ", address=" + address 
+//				+ ", mailList=" + mailList 
+//				+ "]";
+//	}
+	
 	@Override
 	public String toString() {
-		return "User [id=" + id 
-				+ ", name=" + name 
-				+ ", lastname=" + lastname 
-				+ ", address=" + address 
-				+ ", mailList=" + mailList 
-				+ "]";
+		return "\n- id: " + id + "\n"
+				+ "- name: " + name + "\n"
+				+ "- lastname: " + lastname + "\n"
+				+ "- address: " + address + "\n"
+				+ "- mailList: " + mailList + "\n";
 	}
 	
 	
