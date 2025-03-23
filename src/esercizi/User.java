@@ -1,5 +1,6 @@
 package esercizi;
 
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -15,10 +16,10 @@ public class User implements Comparable<User> {
 	
 	String address;
 	
-	Set<String> mailList;
+	Set<String> mailList = new HashSet<String>();
 	
 	
-	
+
 	public String getId() {
 		return id;
 	}
@@ -111,6 +112,17 @@ public class User implements Comparable<User> {
 	        }
 	    }
 	    return cmp;
+	}
+	
+	
+	@Override
+	public String toString() {
+		return "User [id=" + id 
+				+ ", name=" + name 
+				+ ", lastname=" + lastname 
+				+ ", address=" + address 
+				+ ", mailList=" + mailList 
+				+ "]";
 	}
 	
 	
