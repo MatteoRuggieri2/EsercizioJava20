@@ -34,6 +34,7 @@ public class AccountManagement implements Account<User> {
 
 	public static void main(String[] args) {
 		AccountManagement am = new AccountManagement(pathFile);
+		
 		System.out.println();
 		am.users(EnumSortType.SORT_ASCENDING);
 		System.out.println("PROGRAMMA TERMINATO CON SUCCESSO");
@@ -181,11 +182,9 @@ public class AccountManagement implements Account<User> {
 		this.rowsAnalyzer(this.fileRowsContent);
 	}
 	
-	
+	// CHECKED
 	private void rowsAnalyzer(List<String> rows) {
 		for (String row : rows) {
-			
-			System.out.println("\nRiga analizzata: " + row);
 
 			Scanner sc = new Scanner(row);
 			
@@ -204,8 +203,6 @@ public class AccountManagement implements Account<User> {
 			Optional<String> userName = Optional.empty();
 			Optional<String> userLastname = Optional.empty();
 			Optional<String> userAddress = Optional.empty();
-			
-			
 			
 			// Dato che la riga non è vuota, salvo lo userId
 			userId = Optional.of(sc.next());
@@ -229,7 +226,6 @@ public class AccountManagement implements Account<User> {
 				}
 				
 				userEmail = Optional.of(secondToken);
-//				System.out.println(userEmail);
 				
 			/* Altrimenti se c'è un terzo token vuol dire che il secondo
 			 * è il nome, e il terzo è il cognome */
@@ -253,18 +249,10 @@ public class AccountManagement implements Account<User> {
 			// Dopo che ha superato tutti i controlli la metto nella lista delle righe analizzate
 			this.analyzedRows.add(row);
 			
-			
-			// TODO -> Salva gli users
-			// SE TROVA ID AGGIUNGI DATI NON NULL
-			// SE NON TROVA CREA CON ID E AGGIUNGI I DATI NON NULL
+			// Salvo l'utente
 			storeIdentity(userId, userEmail, userName, userLastname, userAddress);
 			
-//			String str = "null";
-//			System.out.println("\nuserId: " + userId.orElse(str));
-//			System.out.println("userEmail: " + userEmail.orElse(str));
-//			System.out.println("userName: " + userName.orElse(str));
-//			System.out.println("userLastname: " + userLastname.orElse(str));
-//			System.out.println("userAddress: " + userAddress.orElse(str));
+			sc.close();
 			
 		}
 		
@@ -283,29 +271,12 @@ public class AccountManagement implements Account<User> {
 		String userLastnameStr = userLastname.orElse(null);
 		String userAddressStr = userAddress.orElse(null);
 	    
-		//TODO - Controlla se gli utenti sono stati aggiunti correttamente con tutti i dati
-		boolean statusAddUser = addUser(userIdStr, userNameStr, userLastnameStr, userAddressStr);
-		boolean statusAddMail;
-	
-		//TODO - Controlla se vangono aggiunte tutte le email
+		addUser(userIdStr, userNameStr, userLastnameStr, userAddressStr);
+
 		// Se la mail non è vuota, la aggiungo
 		if (userEmailStr != null) {
-			statusAddMail = addMail(userIdStr, userEmailStr);
+			addMail(userIdStr, userEmailStr);
 		}
-		
-//		if (!statusAddUser) {
-//			System.err.println("Non è stato possibile salvare il seguente utente: "
-//								+ userIdStr + ", "
-//								+ userNameStr + ", "
-//								+ userLastnameStr + ", "
-//								+ userAddressStr + "."
-//			);
-//		} else if (!statusAddMail) {
-//			System.err.println("Non è stato possibile salvare la seguente email: "
-//					+ userIdStr + ", "
-//					+ userEmailStr + "."
-//			);
-//		}
 	}
 	
 
