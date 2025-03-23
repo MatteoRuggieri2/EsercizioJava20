@@ -18,7 +18,7 @@ public class AccountManagement implements Account<User> {
 	// TODO: - Fai i test JUnit
 	
 	
-	
+	// TODO: Metti le variabili final
 	
 	static private final String pathFile = "src/text_files/accounts_list.txt";
 	
@@ -33,12 +33,15 @@ public class AccountManagement implements Account<User> {
 	
 
 	public static void main(String[] args) {
-		new AccountManagement(pathFile);
+		AccountManagement am = new AccountManagement(pathFile);
+		System.out.println();
+		am.users(EnumSortType.SORT_ASCENDING);
+		System.out.println("PROGRAMMA TERMINATO CON SUCCESSO");
 	}
 	
 	
 	
-	AccountManagement(String fileName) {
+	public AccountManagement(String fileName) {
 		// Leggo ogni riga e separo nome, cognome, indirizzo, email
 		this.users = new HashMap<String, User>();
 		readFile(fileName);
@@ -50,15 +53,16 @@ public class AccountManagement implements Account<User> {
 	@Override
 	public boolean addUser(String userId, String name, String surname, String address) {
 		
-		User newUser = new User();
-		if (userId != null) { newUser.setId(userId); }
-		if (name != null) { newUser.setName(name); }
-		if (surname != null) { newUser.setLastname(name); }
-		if (address != null) { newUser.setAddress(address); }
+		// Verifico se esiste l'utente, altrimenti ne creo uno
+		User user = Optional.ofNullable(users.get(userId)).orElse(new User());
+		if (userId != null) { user.setId(userId); }
+		if (name != null) { user.setName(name); }
+		if (surname != null) { user.setLastname(surname); }
+		if (address != null) { user.setAddress(address); }
 		
 		// Aggiungo l'utente alla mappa
 		try {
-			this.users.put(userId, newUser);
+			this.users.put(userId, user);
 			return true;
 			
 		} catch (Exception e) {
@@ -70,10 +74,10 @@ public class AccountManagement implements Account<User> {
 	
 	// CHECKED
 	@Override
-	public boolean addMail(String idUser, String mail) {
-		Optional<User> userToUpdate = Optional.ofNullable(users.get(idUser));
+	public boolean addMail(String userId, String mail) {
+		Optional<User> userToUpdate = Optional.ofNullable(users.get(userId));
 		if (userToUpdate.isEmpty()) {
-			return false;
+			addUser(userId, null, null, null);
 		}
 		userToUpdate.get().addMailToList(mail);
 		return true;
@@ -111,6 +115,9 @@ public class AccountManagement implements Account<User> {
 	@Override
 	public User[] users(EnumSortType sortType) {
 		// TODO Auto-generated method stub
+		for (Entry<String, User> user : this.users.entrySet()) {
+			System.out.println(user.toString());
+		}
 		return null;
 	}
 
@@ -177,6 +184,8 @@ public class AccountManagement implements Account<User> {
 	
 	private void rowsAnalyzer(List<String> rows) {
 		for (String row : rows) {
+			
+			System.out.println("\nRiga analizzata: " + row);
 
 			Scanner sc = new Scanner(row);
 			
@@ -250,12 +259,12 @@ public class AccountManagement implements Account<User> {
 			// SE NON TROVA CREA CON ID E AGGIUNGI I DATI NON NULL
 			storeIdentity(userId, userEmail, userName, userLastname, userAddress);
 			
-			String str = "null";
-			System.out.println("\nuserId: " + userId.orElse(str));
-			System.out.println("userEmail: " + userEmail.orElse(str));
-			System.out.println("userName: " + userName.orElse(str));
-			System.out.println("userLastname: " + userLastname.orElse(str));
-			System.out.println("userAddress: " + userAddress.orElse(str));
+//			String str = "null";
+//			System.out.println("\nuserId: " + userId.orElse(str));
+//			System.out.println("userEmail: " + userEmail.orElse(str));
+//			System.out.println("userName: " + userName.orElse(str));
+//			System.out.println("userLastname: " + userLastname.orElse(str));
+//			System.out.println("userAddress: " + userAddress.orElse(str));
 			
 		}
 		
@@ -268,15 +277,21 @@ public class AccountManagement implements Account<User> {
 							   Optional<String> userLastname,
 							   Optional<String> userAddress) {
 		
-		String userIdStr = userId.orElse("");
-		String userEmailStr = userEmail.orElse("");
-		String userNameStr = userName.orElse("");
-		String userLastnameStr = userLastname.orElse("");
-		String userAddressStr = userAddress.orElse("");
+		String userIdStr = userId.orElse(null);
+		String userEmailStr = userEmail.orElse(null);
+		String userNameStr = userName.orElse(null);
+		String userLastnameStr = userLastname.orElse(null);
+		String userAddressStr = userAddress.orElse(null);
 	    
 		//TODO - Controlla se gli utenti sono stati aggiunti correttamente con tutti i dati
 		boolean statusAddUser = addUser(userIdStr, userNameStr, userLastnameStr, userAddressStr);
-		// boolean statusAddMail = addMail(userIdStr, userEmailStr); // TODO -> Aggiungi solo se non è vuota la mail
+		boolean statusAddMail;
+	
+		//TODO - Controlla se vangono aggiunte tutte le email
+		// Se la mail non è vuota, la aggiungo
+		if (userEmailStr != null) {
+			statusAddMail = addMail(userIdStr, userEmailStr);
+		}
 		
 //		if (!statusAddUser) {
 //			System.err.println("Non è stato possibile salvare il seguente utente: "
