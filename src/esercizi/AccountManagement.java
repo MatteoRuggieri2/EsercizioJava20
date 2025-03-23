@@ -55,7 +55,7 @@ public class AccountManagement implements Account<User> {
 	public boolean addUser(String userId, String name, String surname, String address) {
 		
 		// Verifico se esiste l'utente, altrimenti ne creo uno
-		User user = Optional.ofNullable(users.get(userId)).orElse(new User());
+		User user = Optional.ofNullable(this.users.get(userId)).orElse(new User());
 		if (userId != null) { user.setId(userId); }
 		if (name != null) { user.setName(name); }
 		if (surname != null) { user.setLastname(surname); }
@@ -71,7 +71,6 @@ public class AccountManagement implements Account<User> {
 			return false;
 		}
 	}
-
 	
 	// CHECKED
 	@Override
@@ -84,21 +83,22 @@ public class AccountManagement implements Account<User> {
 		return true;
 	}
 
+	// CHECKED
 	@Override
-	public boolean existsUser(String idUser) {
-		return this.users.keySet().contains(idUser);
+	public boolean existsUser(String userId) {
+		return this.users.keySet().contains(userId);
 	}
 
 	@Override
-	public boolean userHasMail(String idUser) {
+	public boolean userHasMail(String userId) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
+	// TODO - Usa questo in addUser e dove devi prendere l'user
 	@Override
-	public Optional user(String idUser) {
-		// TODO Auto-generated method stub
-		return null;
+	public Optional<User> user(String userId) {
+		return Optional.ofNullable(this.users.get(userId));
 	}
 
 	@Override
@@ -108,7 +108,7 @@ public class AccountManagement implements Account<User> {
 	}
 
 	@Override
-	public String[] userMails(String idUser) {
+	public String[] userMails(String userId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -183,6 +183,7 @@ public class AccountManagement implements Account<User> {
 	}
 	
 	// CHECKED
+	// Questo metodo analizza le righe del file e richiama i metodi per il salvataggio
 	private void rowsAnalyzer(List<String> rows) {
 		for (String row : rows) {
 
@@ -279,7 +280,6 @@ public class AccountManagement implements Account<User> {
 		}
 	}
 	
-
 	// Questa funzione ritorna un valore booleano, true se la email è formattata correttamente, altrimenti false.
 	public boolean emailCheck(String email) {
 		String regex = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^-]+(?:\\.[a-zA-Z0-9_!#$%&'*+/=?`{|}~^-]+)*@"
@@ -290,7 +290,6 @@ public class AccountManagement implements Account<User> {
 	   Pattern p = Pattern.compile(regex);
 	   return p.matcher(email).matches();
 	}
-	
 	
 	// Questo metodo aggiunge alla lista di righe scartate quella passata come parametro.
 	private void discardRow(String row) {
