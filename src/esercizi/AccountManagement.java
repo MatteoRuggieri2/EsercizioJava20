@@ -55,7 +55,7 @@ public class AccountManagement implements Account<User> {
 	public boolean addUser(String userId, String name, String surname, String address) {
 		
 		// Verifico se esiste l'utente, altrimenti ne creo uno
-		User user = Optional.ofNullable(this.users.get(userId)).orElse(new User());
+		User user = user(userId).orElse(new User());
 		if (userId != null) { user.setId(userId); }
 		if (name != null) { user.setName(name); }
 		if (surname != null) { user.setLastname(surname); }
@@ -89,6 +89,7 @@ public class AccountManagement implements Account<User> {
 		return this.users.keySet().contains(userId);
 	}
 
+	// CHECKED
 	@Override
 	public boolean userHasMail(String userId) {
 		return userMails(userId).length > 0 ? true : false;
@@ -106,6 +107,7 @@ public class AccountManagement implements Account<User> {
 		return null;
 	}
 
+	// CHECKED
 	@Override
 	public String[] userMails(String userId) {
 		Optional<User> user = user(userId);
@@ -259,6 +261,7 @@ public class AccountManagement implements Account<User> {
 		
 	}
 	
+	// CHECKED
 	// Questo metodo si occupa di salvare i dati dell'utente ricavati dalla riga
 	private void storeIdentity(Optional<String> userId,
 							   Optional<String> userEmail,
@@ -280,6 +283,7 @@ public class AccountManagement implements Account<User> {
 		}
 	}
 	
+	// CHECKED
 	// Questa funzione ritorna un valore booleano, true se la email è formattata correttamente, altrimenti false.
 	public boolean emailCheck(String email) {
 		String regex = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^-]+(?:\\.[a-zA-Z0-9_!#$%&'*+/=?`{|}~^-]+)*@"
@@ -291,6 +295,7 @@ public class AccountManagement implements Account<User> {
 	   return p.matcher(email).matches();
 	}
 	
+	// CHECKED
 	// Questo metodo aggiunge alla lista di righe scartate quella passata come parametro.
 	private void discardRow(String row) {
 		this.discardedRows.add(row);
