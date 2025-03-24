@@ -86,7 +86,7 @@ public class AccountManagement implements Account<User> {
 	// CHECKED
 	@Override
 	public boolean existsUser(String userId) {
-		return this.users.keySet().contains(userId);
+		return user(userId).isPresent();
 	}
 
 	// CHECKED
