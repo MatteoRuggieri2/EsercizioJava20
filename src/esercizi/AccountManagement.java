@@ -34,10 +34,10 @@ public class AccountManagement implements Account<User> {
 
 	public static void main(String[] args) {
 		AccountManagement am = new AccountManagement(pathFile);
-		
 		System.out.println();
 		am.users(EnumSortType.SORT_ASCENDING);
 		System.out.println("PROGRAMMA TERMINATO CON SUCCESSO");
+		
 	}
 	
 	
@@ -148,10 +148,10 @@ public class AccountManagement implements Account<User> {
 		return null;
 	}
 
+	// CHECKED
 	@Override
 	public String[] discardedRows() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.discardedRows.toArray(new String[0]);
 	}
 
 	@Override
