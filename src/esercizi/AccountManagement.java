@@ -91,10 +91,7 @@ public class AccountManagement implements Account<User> {
 
 	@Override
 	public boolean userHasMail(String userId) {
-		// Prendo user
-		
-		// Se c'è controllo le email
-		return false;
+		return userMails(userId).length > 0 ? true : false;
 	}
 
 	// TODO - Usa questo in addUser e dove devi prendere l'user
@@ -112,7 +109,7 @@ public class AccountManagement implements Account<User> {
 	@Override
 	public String[] userMails(String userId) {
 		Optional<User> user = user(userId);
-		if (user.isEmpty()) { return null; }
+		if (user(userId).isEmpty()) { return null; }
 		return user.get().getMailList().toArray(new String[0]);
 	}
 
