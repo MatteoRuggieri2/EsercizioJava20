@@ -91,7 +91,9 @@ public class AccountManagement implements Account<User> {
 
 	@Override
 	public boolean userHasMail(String userId) {
-		// TODO Auto-generated method stub
+		// Prendo user
+		
+		// Se c'è controllo le email
 		return false;
 	}
 
@@ -109,8 +111,9 @@ public class AccountManagement implements Account<User> {
 
 	@Override
 	public String[] userMails(String userId) {
-		// TODO Auto-generated method stub
-		return null;
+		Optional<User> user = user(userId);
+		if (user.isEmpty()) { return null; }
+		return user.get().getMailList().toArray(new String[0]);
 	}
 
 	@Override
