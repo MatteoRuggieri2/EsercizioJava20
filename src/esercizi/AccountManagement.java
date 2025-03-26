@@ -37,7 +37,7 @@ public class AccountManagement implements Account<User> {
 
 	public static void main(String[] args) {
 		AccountManagement am = new AccountManagement(pathFile);
-		User[] sortedUsers = am.users(EnumSortType.SORT_DESCENDING);
+		String[] sortedUsers = am.userIds(EnumSortType.SORT_DESCENDING);
 		System.out.println(sortedUsers);
 		System.out.println("PROGRAMMA TERMINATO CON SUCCESSO");
 		am.firstUser();
@@ -99,16 +99,37 @@ public class AccountManagement implements Account<User> {
 		return userMails(userId).length > 0 ? true : false;
 	}
 
-	// TODO - Usa questo in addUser e dove devi prendere l'user
+	// CHECKED
 	@Override
 	public Optional<User> user(String userId) {
 		return Optional.ofNullable(this.users.get(userId));
 	}
 
+	// CHECKED
 	@Override
 	public String[] userIds(EnumSortType sortType) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		Set<String> sortedUserIds = new TreeSet<String>(
+				new Comparator<String>() {
+
+					@Override
+					public int compare(String s1, String s2) {
+						// s1, s2 ordine alfabetico | s2, s1 ordine alf invertito
+						if (sortType == EnumSortType.SORT_DESCENDING) {
+							return s2.compareTo(s1);
+						} else {
+							return s1.compareTo(s2);
+						}
+					}
+				
+				}
+		);
+		
+		for (Entry<String, User> entryUser : this.users.entrySet()) {
+			sortedUserIds.add(entryUser.getValue().getId());
+		}
+		
+		return sortedUserIds.toArray(new String[0]);
 	}
 
 	// CHECKED
@@ -123,7 +144,6 @@ public class AccountManagement implements Account<User> {
 	@Override
 	public User[] users(EnumSortType sortType) {
 		
-		// Leggo enum
 		Set<User> sortedUsers = new TreeSet<User>(
 				new Comparator<User>() {
 
@@ -145,10 +165,10 @@ public class AccountManagement implements Account<User> {
 			sortedUsers.add(user.getValue());
 		}
 		
-		// Se enum e tot faccio in un modo, altrimenti inverto
 		return sortedUsers.toArray(new User[0]);
 	}
-
+	
+	// CHECKED
 	@Override
 	public User firstUser() {
 		User[] users = users(EnumSortType.SORT_ASCENDING);
@@ -157,6 +177,7 @@ public class AccountManagement implements Account<User> {
 				: null;
 	}
 
+	// CHECKED
 	@Override
 	public User lastUser() {
 		User[] users = users(EnumSortType.SORT_ASCENDING);
