@@ -151,8 +151,9 @@ public class AccountManagement implements Account<User> {
 
 	@Override
 	public User firstUser() {
-		return users(EnumSortType.SORT_ASCENDING).length > 0
-				? users(EnumSortType.SORT_ASCENDING)[0]
+		User[] users = users(EnumSortType.SORT_ASCENDING);
+		return users.length > 0
+				? users[0]
 				: null;
 	}
 
