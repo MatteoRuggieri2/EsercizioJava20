@@ -158,8 +158,10 @@ public class AccountManagement implements Account<User> {
 
 	@Override
 	public User lastUser() {
-		// TODO Auto-generated method stub
-		return null;
+		User[] users = users(EnumSortType.SORT_ASCENDING);
+		return users.length > 0
+				? users[users.length - 1]
+				: null;
 	}
 
 	@Override
