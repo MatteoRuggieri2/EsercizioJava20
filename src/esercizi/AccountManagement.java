@@ -3,12 +3,15 @@ package esercizi;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.Scanner;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.regex.Pattern;
 
 public class AccountManagement implements Account<User> {
@@ -34,8 +37,8 @@ public class AccountManagement implements Account<User> {
 
 	public static void main(String[] args) {
 		AccountManagement am = new AccountManagement(pathFile);
-		System.out.println();
-		am.users(EnumSortType.SORT_ASCENDING);
+		User[] sortedUsers = am.users(EnumSortType.SORT_DESCENDING);
+		System.out.println(sortedUsers);
 		System.out.println("PROGRAMMA TERMINATO CON SUCCESSO");
 		
 	}
@@ -115,13 +118,34 @@ public class AccountManagement implements Account<User> {
 		return user.get().getMailList().toArray(new String[0]);
 	}
 
+	// CHECKED
 	@Override
 	public User[] users(EnumSortType sortType) {
-		// TODO Auto-generated method stub
+		
+		// Leggo enum
+		Set<User> sortedUsers = new TreeSet<User>(
+				new Comparator<User>() {
+
+					@Override
+					public int compare(User o1, User o2) {
+						// o1, o2 ordine alfabetico | o2, o1 ordine alf invertito
+						if (sortType == EnumSortType.SORT_DESCENDING) {
+							return o2.compareTo(o1);
+						} else {
+							return o1.compareTo(o2);
+						}
+					}
+				
+				}
+		);
+		
+		// Aggiungo gli utenti al TreeSet con ordinamento variabile in base al parametro
 		for (Entry<String, User> user : this.users.entrySet()) {
-			System.out.println(user.toString());
+			sortedUsers.add(user.getValue());
 		}
-		return null;
+		
+		// Se enum e tot faccio in un modo, altrimenti inverto
+		return sortedUsers.toArray(new User[0]);
 	}
 
 	@Override
