@@ -40,6 +40,7 @@ public class AccountManagement implements Account<User> {
 		User[] sortedUsers = am.users(EnumSortType.SORT_DESCENDING);
 		System.out.println(sortedUsers);
 		System.out.println("PROGRAMMA TERMINATO CON SUCCESSO");
+		am.firstUser();
 		
 	}
 	
@@ -150,8 +151,9 @@ public class AccountManagement implements Account<User> {
 
 	@Override
 	public User firstUser() {
-		// TODO Auto-generated method stub
-		return null;
+		return users(EnumSortType.SORT_ASCENDING).length > 0
+				? users(EnumSortType.SORT_ASCENDING)[0]
+				: null;
 	}
 
 	@Override
