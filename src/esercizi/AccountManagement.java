@@ -3,8 +3,10 @@ package esercizi;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -365,6 +367,21 @@ public class AccountManagement implements Account<User> {
 		this.discardedRows.add(row);
 	}
 
+	/* Questo metodo ritorna i primi elementi di una lista.
+	 * I parametri richiesti sono 2, il numero di elementi da estrarre
+	 * e l'array da cui estrarli. */
+	private <T> T[] firstArrayElements(int numEl, T[] arr) {
+		if (numEl > arr.length) {
+            numEl = arr.length; // Per evitare IndexOutOfBoundsException
+        }
+		
+//		Il metodo Arrays.copyOf(arr, numEl):
+//		Se numEl è minore o uguale alla lunghezza di arr:
+//			→ Copia i primi numEl elementi e restituisce un nuovo array di quella lunghezza.
+//		Se numEl è maggiore della lunghezza di arr
+//			→ Copia tutti gli elementi disponibili e riempie il resto con null (per i tipi reference) o con il valore di default (per i tipi primitivi, es. 0 per int).
+        return Arrays.copyOf(arr, numEl);
+	}
 }
 
 
