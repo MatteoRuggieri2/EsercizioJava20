@@ -189,6 +189,20 @@ public class AccountManagement implements Account<User> {
 	@Override
 	public User[] firstUsers(int numUsers) {
 		// TODO Auto-generated method stub
+		
+		/* Crea un metodo generico che restituisce
+		i primi elementi di un array, in questo modo
+		potrai riutilizzaro anche per il metodo di
+		sotto senza ripetere codice */
+		
+		// Prendo tutti gli utenti e li ordino in alfabetico
+		
+		// Prendo i primi "numUsers"
+		
+		// Li inserisco dentro ArrayList
+		
+		// Converto la lista in array di Users
+		
 		return null;
 	}
 
