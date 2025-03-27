@@ -39,7 +39,7 @@ public class AccountManagement implements Account<User> {
 
 	public static void main(String[] args) {
 		AccountManagement am = new AccountManagement(pathFile);
-		String[] sortedUsers = am.userIds(EnumSortType.SORT_DESCENDING);
+		User[] sortedUsers = am.firstUsers(10);
 		System.out.println(sortedUsers);
 		System.out.println("PROGRAMMA TERMINATO CON SUCCESSO");
 		am.firstUser();
@@ -188,24 +188,10 @@ public class AccountManagement implements Account<User> {
 				: null;
 	}
 
+	// CHECKED
 	@Override
 	public User[] firstUsers(int numUsers) {
-		// TODO Auto-generated method stub
-		
-		/* Crea un metodo generico che restituisce
-		i primi elementi di un array, in questo modo
-		potrai riutilizzaro anche per il metodo di
-		sotto senza ripetere codice */
-		
-		// Prendo tutti gli utenti e li ordino in alfabetico
-		
-		// Prendo i primi "numUsers"
-		
-		// Li inserisco dentro ArrayList
-		
-		// Converto la lista in array di Users
-		
-		return null;
+		return firstArrayElements(numUsers, users(EnumSortType.SORT_ASCENDING));
 	}
 
 	@Override
