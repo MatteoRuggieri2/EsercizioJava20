@@ -39,7 +39,7 @@ public class AccountManagement implements Account<User> {
 
 	public static void main(String[] args) {
 		AccountManagement am = new AccountManagement(pathFile);
-		User[] sortedUsers = am.lastUsers(10);
+		String[] sortedUsers = am.allMails();
 		System.out.println(sortedUsers);
 		System.out.println("PROGRAMMA TERMINATO CON SUCCESSO");
 		am.firstUser();
@@ -206,10 +206,29 @@ public class AccountManagement implements Account<User> {
 		return this.discardedRows.toArray(new String[0]);
 	}
 
+	// CHECKED
 	@Override
 	public String[] allMails() {
-		// TODO Auto-generated method stub
-		return null;
+		Set<String> allMails = new TreeSet<String>(
+				new Comparator<String>() {
+
+					@Override
+					public int compare(String o1, String o2) {
+						return o1.compareTo(o2);
+					}
+			
+				}
+		);
+		
+		for (String userId : userIds(EnumSortType.SORT_ASCENDING)) {
+			String[] userMails = userMails(userId);
+			
+			for (String singleMail : userMails) {
+				allMails.add(singleMail.toLowerCase());
+			}
+		}
+		
+		return allMails.toArray(new String[0]);
 	}
 	
 	// CHECKED
@@ -353,6 +372,7 @@ public class AccountManagement implements Account<User> {
 		this.discardedRows.add(row);
 	}
 
+	// CHECKED
 	/* Questo metodo ritorna i primi elementi di una lista.
 	 * I parametri richiesti sono 2, il numero di elementi da estrarre
 	 * e l'array da cui estrarli. */
