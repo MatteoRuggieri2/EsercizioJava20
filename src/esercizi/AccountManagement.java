@@ -39,7 +39,7 @@ public class AccountManagement implements Account<User> {
 
 	public static void main(String[] args) {
 		AccountManagement am = new AccountManagement(pathFile);
-		User[] sortedUsers = am.firstUsers(10);
+		User[] sortedUsers = am.lastUsers(10);
 		System.out.println(sortedUsers);
 		System.out.println("PROGRAMMA TERMINATO CON SUCCESSO");
 		am.firstUser();
@@ -194,10 +194,10 @@ public class AccountManagement implements Account<User> {
 		return firstArrayElements(numUsers, users(EnumSortType.SORT_ASCENDING));
 	}
 
+	// CHECKED
 	@Override
 	public User[] lastUsers(int numUsers) {
-		// TODO Auto-generated method stub
-		return null;
+		return firstArrayElements(numUsers, users(EnumSortType.SORT_DESCENDING));
 	}
 
 	// CHECKED
