@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -18,22 +17,17 @@ import java.util.regex.Pattern;
 
 public class AccountManagement implements Account<User> {
 	
-	// TODO: - Controlla metodi già scritti
-	// TODO: - Implementa quelli mancanti
 	// TODO: - Fai i test JUnit
-	
-	
-	// TODO: Metti le variabili final
 	
 	static private final String pathFile = "src/text_files/accounts_list.txt";
 	
-	private List<String> fileRowsContent = new ArrayList<String>(); // Contiene le righe del file così come sono
+	private final List<String> fileRowsContent = new ArrayList<String>(); // Contiene le righe del file così come sono
 	
-	private List<String> analyzedRows = new ArrayList<String>(); // Contiene le righe corrette analizzate (serve per verificare eventuali doppioni)
+	private final List<String> analyzedRows = new ArrayList<String>(); // Contiene le righe corrette analizzate (serve per verificare eventuali doppioni)
 	
-	private List<String> discardedRows = new ArrayList<String>(); // Contiene tutte le righe scartate
+	private final List<String> discardedRows = new ArrayList<String>(); // Contiene tutte le righe scartate
 	
-	private Map<String, User> users;
+	private final Map<String, User> users;
 	
 	
 
