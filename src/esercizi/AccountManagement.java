@@ -17,8 +17,6 @@ import java.util.regex.Pattern;
 
 public class AccountManagement implements Account<User> {
 	
-	// TODO: - Fai i test JUnit
-	
 	static private final String pathFile = "src/text_files/accounts_list.txt";
 	
 	private final List<String> fileRowsContent = new ArrayList<String>(); // Contiene le righe del file così come sono
@@ -50,7 +48,7 @@ public class AccountManagement implements Account<User> {
 	}
 
 	
-	// CHECKED
+
 	@Override
 	public boolean addUser(String userId, String name, String surname, String address) {
 		
@@ -72,7 +70,6 @@ public class AccountManagement implements Account<User> {
 		}
 	}
 	
-	// CHECKED
 	@Override
 	public boolean addMail(String userId, String mail) {
 		Optional<User> userToUpdate = Optional.ofNullable(users.get(userId));
@@ -83,25 +80,21 @@ public class AccountManagement implements Account<User> {
 		return true;
 	}
 
-	// CHECKED
 	@Override
 	public boolean existsUser(String userId) {
 		return user(userId).isPresent();
 	}
 
-	// CHECKED
 	@Override
 	public boolean userHasMail(String userId) {
 		return userMails(userId).length > 0 ? true : false;
 	}
 
-	// CHECKED
 	@Override
 	public Optional<User> user(String userId) {
 		return Optional.ofNullable(this.users.get(userId));
 	}
 
-	// CHECKED
 	@Override
 	public String[] userIds(EnumSortType sortType) {
 		
@@ -128,7 +121,6 @@ public class AccountManagement implements Account<User> {
 		return sortedUserIds.toArray(new String[0]);
 	}
 
-	// CHECKED
 	@Override
 	public String[] userMails(String userId) {
 		Optional<User> user = user(userId);
@@ -136,7 +128,6 @@ public class AccountManagement implements Account<User> {
 		return user.get().getMailList().toArray(new String[0]);
 	}
 
-	// CHECKED
 	@Override
 	public User[] users(EnumSortType sortType) {
 		
@@ -164,7 +155,6 @@ public class AccountManagement implements Account<User> {
 		return sortedUsers.toArray(new User[0]);
 	}
 	
-	// CHECKED
 	@Override
 	public User firstUser() {
 		User[] users = users(EnumSortType.SORT_ASCENDING);
@@ -173,7 +163,6 @@ public class AccountManagement implements Account<User> {
 				: null;
 	}
 
-	// CHECKED
 	@Override
 	public User lastUser() {
 		User[] users = users(EnumSortType.SORT_ASCENDING);
@@ -182,25 +171,21 @@ public class AccountManagement implements Account<User> {
 				: null;
 	}
 
-	// CHECKED
 	@Override
 	public User[] firstUsers(int numUsers) {
 		return firstArrayElements(numUsers, users(EnumSortType.SORT_ASCENDING));
 	}
 
-	// CHECKED
 	@Override
 	public User[] lastUsers(int numUsers) {
 		return firstArrayElements(numUsers, users(EnumSortType.SORT_DESCENDING));
 	}
 
-	// CHECKED
 	@Override
 	public String[] discardedRows() {
 		return this.discardedRows.toArray(new String[0]);
 	}
 
-	// CHECKED
 	@Override
 	public String[] allMails() {
 		Set<String> allMails = new TreeSet<String>(
@@ -225,7 +210,6 @@ public class AccountManagement implements Account<User> {
 		return allMails.toArray(new String[0]);
 	}
 	
-	// CHECKED
 	// Questa funzione prende il path del file, apre il file e ritorna una lista 
 	private void readFile(String path) {
 		
@@ -249,7 +233,6 @@ public class AccountManagement implements Account<User> {
 		this.rowsAnalyzer(this.fileRowsContent);
 	}
 	
-	// CHECKED
 	// Questo metodo analizza le righe del file e richiama i metodi per il salvataggio
 	private void rowsAnalyzer(List<String> rows) {
 		for (String row : rows) {
@@ -326,7 +309,6 @@ public class AccountManagement implements Account<User> {
 		
 	}
 	
-	// CHECKED
 	// Questo metodo si occupa di salvare i dati dell'utente ricavati dalla riga
 	private void storeIdentity(Optional<String> userId,
 							   Optional<String> userEmail,
@@ -348,7 +330,6 @@ public class AccountManagement implements Account<User> {
 		}
 	}
 	
-	// CHECKED
 	// Questa funzione ritorna un valore booleano, true se la email è formattata correttamente, altrimenti false.
 	public boolean emailCheck(String email) {
 		String regex = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^-]+(?:\\.[a-zA-Z0-9_!#$%&'*+/=?`{|}~^-]+)*@"
@@ -360,13 +341,11 @@ public class AccountManagement implements Account<User> {
 	   return p.matcher(email).matches();
 	}
 	
-	// CHECKED
 	// Questo metodo aggiunge alla lista di righe scartate quella passata come parametro.
 	private void discardRow(String row) {
 		this.discardedRows.add(row);
 	}
 
-	// CHECKED
 	/* Questo metodo ritorna i primi elementi di una lista.
 	 * I parametri richiesti sono 2, il numero di elementi da estrarre
 	 * e l'array da cui estrarli. */
