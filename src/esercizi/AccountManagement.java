@@ -30,12 +30,8 @@ public class AccountManagement implements Account<User> {
 	
 
 	public static void main(String[] args) {
-		AccountManagement am = new AccountManagement(pathFile);
-		String[] sortedUsers = am.allMails();
-		System.out.println(sortedUsers);
+		new AccountManagement(pathFile);
 		System.out.println("PROGRAMMA TERMINATO CON SUCCESSO");
-		am.firstUser();
-		
 	}
 	
 	
@@ -44,7 +40,6 @@ public class AccountManagement implements Account<User> {
 		// Leggo ogni riga e separo nome, cognome, indirizzo, email
 		this.users = new HashMap<String, User>();
 		readFile(fileName);
-		
 	}
 
 	
