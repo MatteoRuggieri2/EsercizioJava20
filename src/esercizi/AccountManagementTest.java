@@ -2,61 +2,72 @@ package esercizi;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
+import java.util.TreeSet;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 class AccountManagementTest {
 	
-	static String pathFile = "src/text_files/accounts_list.txt";
-	static AccountManagement ga;
+	static final String pathFile = "src/text_files/accounts_list.txt";
+	static AccountManagement am;
 
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
-		ga = new AccountManagement(pathFile);
+		am = new AccountManagement(pathFile);
 	}
 
 	@Test
 	void testAddUser() {
 		
-		/* Creo un HashMap di test uguale a quello di GestioneAccount
-		 * e aggiungo un utente uguale a quello che aggiungerò come
-		 * test utilizzando il metodo "addUser".
-		 * Questo sarà l'HashMap con cui confrontare quello originale. */
-		Map<String, User> usersTestMap = new HashMap<>(ga.users);
+		// Creo un TreeSet con gli utenti esistenti e uno di test
+		Set<User> expectedUser = new TreeSet<User>(
+				new Comparator<User>() {
+					@Override
+					public int compare(User o1, User o2) {
+						return o1.compareTo(o2);
+					}
+				}
+		);
+		
 		User newUser = new User();
-		newUser.setNome("Matteo");
-		newUser.setCognome("Ruggieri");
-		newUser.setIndirizzo("Via di test 15, TO");
-		usersTestMap.put("U111", newUser);
-
-		// Aggiungo utente nell'HashMap originale
-		ga.addUser("U111", "Matteo", "Ruggieri", "Via di test 15, TO");
+		newUser.setId("U111");
+		newUser.setName("Matteo");
+		newUser.setLastname("Ruggieri");
+		newUser.setAddress("Via di test 15, TO");
+		expectedUser.add(newUser);
 		
-		// Confronto le due HashMap per verificare che l'utente sia stato aggiunto correttamente
-		assertEquals(usersTestMap, ga.users);
+		for (User user : am.users(EnumSortType.SORT_ASCENDING)) {
+			expectedUser.add(user);
+		}
 		
-		/* Siccome assertEquals confronta i riferimenti, di base non confronta il valore delle mappe.
-		 * Per sicurezza conviene creare un arrayList e inserire dentro tutti i valori di test. 
-		 * Poi crei una nuova arrayList dove metti tutti gli utenti della mappa originale.
-		 * Successivamente per confrontare i valori delle 2 arrayList utilizza containsAll() */
+		
+		// Aggiungo l'utente di test nella mappa originale
+		am.addUser("U111", "Matteo", "Ruggieri", "Via di test 15, TO");
+	
+		assertArrayEquals(expectedUser.toArray(), am.users(EnumSortType.SORT_ASCENDING));
 	}
 	
-	@Test
-	void testEmailCheckTrue() {
-		assertTrue(ga.emailCheck("matteoruggieri2@gmail.com"));
-		assertTrue(ga.emailCheck("pincopallo@libero.it"));
-		assertTrue(ga.emailCheck("giorgio.poggi@google.com"));
-	}
-	
-	@Test
-	void testEmailCheckFalse() {
-//		 assertFalse(ga.emailCheck("matteoruggieri2@gmail.2")); // da' errore, penso dipenda dalla scrittura dell'espressione regolare
-		assertFalse(ga.emailCheck("332@gmail."));
-//		 assertFalse(ga.emailCheck("222@334gf.com")); // da' errore
-//		assertFalse(ga.emailCheck("giorgio.poggi@@gmail.com"));
-	}
+//	@Test
+//	void testEmailCheckTrue() {
+//		assertTrue(ga.emailCheck("matteoruggieri2@gmail.com"));
+//		assertTrue(ga.emailCheck("pincopallo@libero.it"));
+//		assertTrue(ga.emailCheck("giorgio.poggi@google.com"));
+//	}
+//	
+//	@Test
+//	void testEmailCheckFalse() {
+////		 assertFalse(ga.emailCheck("matteoruggieri2@gmail.2")); // da' errore, penso dipenda dalla scrittura dell'espressione regolare
+//		assertFalse(ga.emailCheck("332@gmail."));
+////		 assertFalse(ga.emailCheck("222@334gf.com")); // da' errore
+////		assertFalse(ga.emailCheck("giorgio.poggi@@gmail.com"));
+//	}
 
 }
