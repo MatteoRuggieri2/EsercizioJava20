@@ -2,17 +2,11 @@ package esercizi;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Set;
-import java.util.TreeMap;
 import java.util.TreeSet;
-
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class AccountManagementTest {
@@ -20,8 +14,8 @@ class AccountManagementTest {
 	static final String pathFile = "src/text_files/accounts_list.txt";
 	static AccountManagement am;
 
-	@BeforeAll
-	static void setUpBeforeClass() throws Exception {
+	@BeforeEach
+	void setUpBeforeClass() throws Exception {
 		am = new AccountManagement(pathFile);
 	}
 
@@ -61,6 +55,12 @@ class AccountManagementTest {
 		String testMail = "matteoruggieri@test.com";
 		am.addMail(testId, testMail);
 		assertTrue(Arrays.asList(am.allMails()).contains(testMail));
+	}
+	
+	@Test
+	void testExistsUser() {
+		assertTrue(am.existsUser("U056"));
+		assertFalse(am.existsUser("U111"));
 	}
 
 
