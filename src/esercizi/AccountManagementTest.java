@@ -3,6 +3,7 @@ package esercizi;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -48,26 +49,19 @@ class AccountManagementTest {
 			expectedUser.add(user);
 		}
 		
-		
 		// Aggiungo l'utente di test nella mappa originale
 		am.addUser("U111", "Matteo", "Ruggieri", "Via di test 15, TO");
 	
 		assertArrayEquals(expectedUser.toArray(), am.users(EnumSortType.SORT_ASCENDING));
 	}
 	
-//	@Test
-//	void testEmailCheckTrue() {
-//		assertTrue(ga.emailCheck("matteoruggieri2@gmail.com"));
-//		assertTrue(ga.emailCheck("pincopallo@libero.it"));
-//		assertTrue(ga.emailCheck("giorgio.poggi@google.com"));
-//	}
-//	
-//	@Test
-//	void testEmailCheckFalse() {
-////		 assertFalse(ga.emailCheck("matteoruggieri2@gmail.2")); // da' errore, penso dipenda dalla scrittura dell'espressione regolare
-//		assertFalse(ga.emailCheck("332@gmail."));
-////		 assertFalse(ga.emailCheck("222@334gf.com")); // da' errore
-////		assertFalse(ga.emailCheck("giorgio.poggi@@gmail.com"));
-//	}
+	@Test
+	void testAddEmail() {
+		String testId = "U111";
+		String testMail = "matteoruggieri@test.com";
+		am.addMail(testId, testMail);
+		assertTrue(Arrays.asList(am.allMails()).contains(testMail));
+	}
+
 
 }
