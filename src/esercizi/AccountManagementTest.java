@@ -66,6 +66,7 @@ class AccountManagementTest {
 	@Test
 	void testUserHasMail() {
 		assertTrue(am.userHasMail("U056"));
+		assertFalse(am.userHasMail("U111"));
 	}
 
 

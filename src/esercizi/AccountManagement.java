@@ -119,7 +119,7 @@ public class AccountManagement implements Account<User> {
 	@Override
 	public String[] userMails(String userId) {
 		Optional<User> user = user(userId);
-		if (user(userId).isEmpty()) { return null; }
+		if (user(userId).isEmpty()) { return new String[0]; }
 		return user.get().getMailList().toArray(new String[0]);
 	}
 
