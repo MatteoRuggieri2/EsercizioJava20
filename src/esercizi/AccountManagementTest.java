@@ -47,7 +47,7 @@ class AccountManagementTest {
 		}
 		
 		// Aggiungo l'utente di test nella mappa originale
-		am.addUser("U111", "Matteo", "Ruggieri", "Via di test 15, TO");
+		am.addUser(testUser.getId(), testUser.getName(), testUser.getLastname(), testUser.getAddress());
 	
 		assertArrayEquals(expectedUser.toArray(), am.users(EnumSortType.SORT_ASCENDING));
 	}
