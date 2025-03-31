@@ -13,10 +13,17 @@ class AccountManagementTest {
 	
 	static final String pathFile = "src/text_files/accounts_list.txt";
 	static AccountManagement am;
+	static User testUser;
 
 	@BeforeEach
 	void setUpBeforeClass() throws Exception {
 		am = new AccountManagement(pathFile);
+		
+		User testUser = new User();
+		testUser.setId("U111");
+		testUser.setName("Matteo");
+		testUser.setLastname("Ruggieri");
+		testUser.setAddress("Via di test 15, TO");
 	}
 
 	@Test
@@ -32,12 +39,7 @@ class AccountManagementTest {
 				}
 		);
 		
-		User newUser = new User();
-		newUser.setId("U111");
-		newUser.setName("Matteo");
-		newUser.setLastname("Ruggieri");
-		newUser.setAddress("Via di test 15, TO");
-		expectedUser.add(newUser);
+		expectedUser.add(testUser);
 		
 		for (User user : am.users(EnumSortType.SORT_ASCENDING)) {
 			expectedUser.add(user);
@@ -67,6 +69,11 @@ class AccountManagementTest {
 	void testUserHasMail() {
 		assertTrue(am.userHasMail("U056"));
 		assertFalse(am.userHasMail("U111"));
+	}
+	
+	@Test
+	void findUser() {
+		
 	}
 
 
