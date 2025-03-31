@@ -49,7 +49,7 @@ class AccountManagementTest {
 		assertArrayEquals(expectedUser.toArray(), am.users(EnumSortType.SORT_ASCENDING));
 	}
 	
-	@Test
+	@Test //TODO - La mail non viene aggiunta
 	void testAddEmail() {
 		String testId = "U111";
 		String testMail = "matteoruggieri@test.com";
@@ -61,6 +61,11 @@ class AccountManagementTest {
 	void testExistsUser() {
 		assertTrue(am.existsUser("U056"));
 		assertFalse(am.existsUser("U111"));
+	}
+	
+	@Test
+	void testUserHasMail() {
+		assertTrue(am.userHasMail("U056"));
 	}
 
 
