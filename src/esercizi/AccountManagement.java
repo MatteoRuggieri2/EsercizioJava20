@@ -71,6 +71,7 @@ public class AccountManagement implements Account<User> {
 		if (userToUpdate.isEmpty()) {
 			addUser(userId, null, null, null);
 		}
+		userToUpdate = Optional.of(users.get(userId)); // Aggiorno con l'utente creato
 		userToUpdate.get().addMailToList(mail);
 		return true;
 	}
