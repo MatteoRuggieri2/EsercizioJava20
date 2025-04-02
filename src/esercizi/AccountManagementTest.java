@@ -73,7 +73,7 @@ class AccountManagementTest {
 	}
 	
 	@Test
-	void findUser() {
+	void TestFindUser() {
 		am.addUser(testUser.getId(), testUser.getName(), testUser.getLastname(), testUser.getAddress());
 		Optional<User> result = am.user(testUser.getId());
 		assertEquals(testUser, result.get());
