@@ -73,7 +73,7 @@ class AccountManagementTest {
 	}
 	
 	@Test
-	void TestFindUser() {
+	void testFindUser() {
 		am.addUser(testUser.getId(), testUser.getName(), testUser.getLastname(), testUser.getAddress());
 		Optional<User> result = am.user(testUser.getId());
 		assertEquals(testUser, result.get());
@@ -82,6 +82,14 @@ class AccountManagementTest {
 		 * memoria degli oggetti utilizzano equals(), ma in questo caso,
 		 * nella classe User è stato sovrascritto il metodo equals
 		 * che ora confronta il valore degli attributi. */
+	}
+	
+	@Test
+	void testUserIds() {
+		String[] expectedUserIdsASC = { "U001", "U020", "U022", "U033", "U056" };
+		String[] expectedUserIdsDESC = { "U056", "U033", "U022", "U020", "U001" };
+		assertArrayEquals(expectedUserIdsASC, am.userIds(EnumSortType.SORT_ASCENDING));
+		assertArrayEquals(expectedUserIdsDESC, am.userIds(EnumSortType.SORT_DESCENDING));
 	}
 
 
