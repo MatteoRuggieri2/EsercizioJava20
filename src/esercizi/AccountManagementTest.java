@@ -91,6 +91,14 @@ class AccountManagementTest {
 		assertArrayEquals(expectedUserIdsASC, am.userIds(EnumSortType.SORT_ASCENDING));
 		assertArrayEquals(expectedUserIdsDESC, am.userIds(EnumSortType.SORT_DESCENDING));
 	}
+	
+	@Test
+	void testUserMails() {
+		String[] albertoGabbaiEmails = { "alberto.gabbai@libero.it" };
+		String[] carloNavoneEmails = { "carlo.navone@hotmail.com", "carlo.navone@libero.it" }; // Ordinati in base al codice HASH
+		assertArrayEquals(albertoGabbaiEmails, am.userMails("U001"));
+		assertArrayEquals(carloNavoneEmails, am.userMails("U056"));
+	}
 
 
 }

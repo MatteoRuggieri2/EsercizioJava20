@@ -30,7 +30,8 @@ public class AccountManagement implements Account<User> {
 	
 
 	public static void main(String[] args) {
-		new AccountManagement(pathFile);
+		AccountManagement am = new AccountManagement(pathFile);
+		String[] test = am.userMails("U056");
 		System.out.println("PROGRAMMA TERMINATO CON SUCCESSO");
 	}
 	
