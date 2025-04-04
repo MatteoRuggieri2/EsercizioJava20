@@ -99,6 +99,15 @@ class AccountManagementTest {
 		assertArrayEquals(albertoGabbaiEmails, am.userMails("U001"));
 		assertArrayEquals(carloNavoneEmails, am.userMails("U056"));
 	}
+	
+	@Test
+	void testUsers() {
+		// Creo un array di utenti ordinati in Alf ASC
+		// Creo un array di utenti ordindati in Alf DESC
+		
+		// Confronto il primo array
+		// Confronto il secondo array
+	}
 
 
 }
