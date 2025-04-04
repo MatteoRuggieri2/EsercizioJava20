@@ -19,6 +19,19 @@ public class User implements Comparable<User> {
 	Set<String> mailList = new HashSet<String>();
 	
 	
+	
+	public User() {
+		
+	}
+	
+	public User(String id, String name, String lastname, String address) {
+		setId(id);
+		setName(name);
+		setLastname(lastname);
+		setAddress(address);
+	}
+	
+	
 
 	public String getId() {
 		return id;
