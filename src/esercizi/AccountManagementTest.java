@@ -20,11 +20,7 @@ class AccountManagementTest {
 	void setUpBeforeClass() throws Exception {
 		am = new AccountManagement(pathFile);
 		
-		testUser = new User();
-		testUser.setId("U111");
-		testUser.setName("Matteo");
-		testUser.setLastname("Ruggieri");
-		testUser.setAddress("Via di test 15, TO");
+		testUser = new User("U111", "Matteo", "Ruggieri", "Via di test 15, TO");
 	}
 
 	@Test
@@ -102,11 +98,27 @@ class AccountManagementTest {
 	
 	@Test
 	void testUsers() {
+		//TODO - Ma devo crearmi tutti gli user a mano?!
+		
 		// Creo un array di utenti ordinati in Alf ASC
 		// Creo un array di utenti ordindati in Alf DESC
 		
 		// Confronto il primo array
 		// Confronto il secondo array
+	}
+	
+	@Test
+	void testAllMails() {
+		String[] expectedEmails = {
+		    "alberto.gabbai@libero.it",
+		    "carlo.navone@hotmail.com",
+		    "carlo.navone@libero.it",
+		    "giorgio.poggi@google.com",
+		    "giorgio.poggi@libero.it",
+		    "giorgio.poggi@spformazione.com",
+		};
+		
+		assertArrayEquals(expectedEmails, am.allMails());
 	}
 
 
