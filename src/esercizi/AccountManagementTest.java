@@ -2,8 +2,10 @@ package esercizi;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.TreeSet;
@@ -112,13 +114,37 @@ class AccountManagementTest {
 		user5.addMailToList("carlo.navone@libero.it");
 		user5.addMailToList("carlo.navone@hotmail.com");
 		
+		List<User> usersList = new ArrayList<User>();
+		usersList.add(user1);
+		usersList.add(user2);
+		usersList.add(user3);
+		usersList.add(user4);
+		usersList.add(user5);
 		
-		// TODO
-		// Creo un array di utenti ordinati in Alf ASC
-		// Creo un array di utenti ordindati in Alf DESC
+		Set<User> expectedUserASC = new TreeSet<User>(
+				new Comparator<User>() {
+					@Override
+					public int compare(User o1, User o2) {
+						return o1.compareTo(o2);
+					}
+				}
+		);
 		
-		// Confronto il primo array
-		// Confronto il secondo array
+		Set<User> expectedUserDESC = new TreeSet<User>(
+				new Comparator<User>() {
+					@Override
+					public int compare(User o1, User o2) {
+						return o2.compareTo(o1);
+					}
+				}
+		);
+		
+		expectedUserASC.addAll(usersList);
+		expectedUserDESC.addAll(usersList);
+		
+		assertArrayEquals(expectedUserASC.toArray(new User[0]), am.users(EnumSortType.SORT_ASCENDING));
+		assertArrayEquals(expectedUserDESC.toArray(new User[0]), am.users(EnumSortType.SORT_DESCENDING));
+		
 	}
 	
 	@Test
