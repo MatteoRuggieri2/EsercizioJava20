@@ -17,12 +17,30 @@ class AccountManagementTest {
 	static final String pathFile = "src/text_files/accounts_list.txt";
 	static AccountManagement am;
 	static User testUser;
+	static User user1;
+	static User user2;
+	static User user3;
+	static User user4;
+	static User user5;
 
 	@BeforeEach
 	void setUpBeforeClass() throws Exception {
 		am = new AccountManagement(pathFile);
 		
 		testUser = new User("U111", "Matteo", "Ruggieri", "Via di test 15, TO");
+		
+		user1 = new User("U001", "Alberto", "Gabbai", "Via Servais 16/A Torino");
+		user2 = new User("U020", "Giorgio", "Poggi", "Via San Massimo 3 Torino");
+		user3 = new User("U022", "Giorgio", "Palandri", "Via Livorno 25/a Torino");
+		user4 = new User("U033", "Giampietro", "Zedda", "Via Po 20 Torino");
+		user5 = new User("U056", "Carlo", "Navone", "Via exilles 12");
+		
+		user1.addMailToList("alberto.gabbai@libero.it");
+		user2.addMailToList("giorgio.poggi@libero.it");
+		user2.addMailToList("giorgio.poggi@google.com");
+		user2.addMailToList("giorgio.poggi@spformazione.com");
+		user5.addMailToList("carlo.navone@libero.it");
+		user5.addMailToList("carlo.navone@hotmail.com");
 	}
 
 	@Test
@@ -100,19 +118,6 @@ class AccountManagementTest {
 	
 	@Test
 	void testUsers() {
-		// Users per il confronto
-		User user1 = new User("U001", "Alberto", "Gabbai", "Via Servais 16/A Torino");
-		User user2 = new User("U020", "Giorgio", "Poggi", "Via San Massimo 3 Torino");
-		User user3 = new User("U022", "Giorgio", "Palandri", "Via Livorno 25/a Torino");
-		User user4 = new User("U033", "Giampietro", "Zedda", "Via Po 20 Torino");
-		User user5 = new User("U056", "Carlo", "Navone", "Via exilles 12");
-		
-		user1.addMailToList("alberto.gabbai@libero.it");
-		user2.addMailToList("giorgio.poggi@libero.it");
-		user2.addMailToList("giorgio.poggi@google.com");
-		user2.addMailToList("giorgio.poggi@spformazione.com");
-		user5.addMailToList("carlo.navone@libero.it");
-		user5.addMailToList("carlo.navone@hotmail.com");
 		
 		List<User> usersList = new ArrayList<User>();
 		usersList.add(user1);
@@ -145,6 +150,12 @@ class AccountManagementTest {
 		assertArrayEquals(expectedUserASC.toArray(new User[0]), am.users(EnumSortType.SORT_ASCENDING));
 		assertArrayEquals(expectedUserDESC.toArray(new User[0]), am.users(EnumSortType.SORT_DESCENDING));
 		
+	}
+	
+	@Test
+	void testFirstUser() {
+		User expectedUser = user1;
+		assertEquals(expectedUser, am.firstUser());
 	}
 	
 	@Test
