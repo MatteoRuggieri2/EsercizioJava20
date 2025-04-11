@@ -177,6 +177,17 @@ class AccountManagementTest {
 	}
 	
 	@Test
+	void testDiscardedRows() {
+		String[] expectedDiscardedRows = {
+			"U025",
+			"U026 Giusi",
+			"U027 Giusi Ferrero",
+			"U033 giampietro.zedda@libero.it.it",
+		};
+		assertArrayEquals(expectedDiscardedRows, am.discardedRows());
+	}
+	
+	@Test
 	void testAllMails() {
 		String[] expectedEmails = {
 		    "alberto.gabbai@libero.it",
