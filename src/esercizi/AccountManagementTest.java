@@ -171,6 +171,12 @@ class AccountManagementTest {
 	}
 	
 	@Test
+	void testLastUsers() {
+		User[] expectedUsers = { user4, user2 };
+		assertArrayEquals(expectedUsers, am.lastUsers(2));
+	}
+	
+	@Test
 	void testAllMails() {
 		String[] expectedEmails = {
 		    "alberto.gabbai@libero.it",
